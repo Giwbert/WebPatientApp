@@ -1,0 +1,38 @@
+﻿@model WebPatientApp.Models.DTO.PatientListVm
+@{
+    Layout = "_Layout";
+}
+<section class="search-bar">
+    <form method="get" asp-action="Index">
+        <input type="text" name="term" placeholder="search here">
+        <button type="submit"><i class="fa fa-search"></i></button>
+      @*  <a class="btn btn-default" href="/Home/Index">All</a>*@
+        @Html.ActionLink("View All Patients", "Index", "Home" )
+    </form>
+</section>
+<section class="patients">
+    @foreach(var patient in Model.PatientList){
+        <div class="movie-card" onclick="window.location.href='/Home/PatientDetail?patientId=@patient.Id'">
+        <div class="movie-info">
+                <h3>@patient.Name</h3>
+                <h4>@patient.Age</h4>
+                <h4>@patient.PhoneNumber</h4>
+                <h4>Email : @patient.Email</h4>
+                <h4>Gender : @patient.Gender</h4>
+        </div>
+    </div>
+    }
+</section>
+
+<div class="pagination">
+    @for(int i=1;i<=Model.TotalPages;i++){
+        if(i==Model.CurrentPage){
+            <a href="/Home/Index?currentPage=@i&term=@Model.Term" class="active">@i</a>
+        }
+        else{
+            <a href="/Home/Index?currentPage=@i&term=@Model.Term">@i</a>
+
+        }
+    }
+   
+</div>
